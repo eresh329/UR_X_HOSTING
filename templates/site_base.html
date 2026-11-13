@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ sname }} · {{ site_name }}{% endblock %}
+{% block crumbs %}<a href="{{ url_for('dashboard') }}">Sites</a><span class="sl">/</span><a href="{{ url_for('site_overview', name=sname) }}">{{ sname }}</a><span class="sl">/</span><b>{{ active|capitalize }}</b>{% endblock %}
+{% block content %}
+<div class="ph rv">
+  <div class="pico run">{{ ic('globe', 26) }}</div>
+  <div class="grow">
+    <h1>{{ sname }}</h1>
+    <div class="meta">
+      <span class="badge run"><i class="dot"></i>LIVE</span>
+      <span class="tag">{{ ic('file', 13) }}{{ hosted.files }} files</span>
+      <span class="tag">{{ ic('history', 13) }}{{ hosted.versions|length }} versions</span>
+    </div>
+  </div>
+  <a class="btn pri" href="{{ hosted.url }}" target="_blank" rel="noopener">{{ ic('external', 16) }}Open site</a>
+</div>
+<nav class="ptabs rv" style="--i:1" aria-label="Site">
+  <a href="{{ url_for('site_overview', name=sname) }}" class="{{ 'on' if active == 'overview' }}">{{ ic('globe', 16) }}Overview</a>
+  <a href="{{ url_for('site_files', name=sname) }}" class="{{ 'on' if active == 'files' }}">{{ ic('folder', 16) }}Files</a>
+  <a href="{{ url_for('site_versions', name=sname) }}" class="{{ 'on' if active == 'versions' }}">{{ ic('history', 16) }}Versions</a>
+  <a href="{{ url_for('site_settings', name=sname) }}" class="{{ 'on' if active == 'settings' }}">{{ ic('sliders', 16) }}Settings</a>
+</nav>
+{% block pbody %}{% endblock %}
+{% endblock %}

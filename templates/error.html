@@ -1,0 +1,11 @@
+{% extends "base_pub.html" %}
+{% block title %}{{ code }} · {{ site_name }}{% endblock %}
+{% block pnav %}<a class="btn sm" href="/">{{ ic('home', 15) }}Home</a>{% endblock %}
+{% block content %}
+<div class="solo"><div>
+  <div class="code">{{ code }}</div>
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+  <a class="btn pri lg" href="/">{{ ic('home', 18) }}Back to home</a>
+</div></div>
+{% endblock %}

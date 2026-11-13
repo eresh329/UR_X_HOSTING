@@ -1,0 +1,52 @@
+{% from "_icons.html" import ic with context %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include "_head.html" %}
+<title>{% block title %}{{ site_name }}{% endblock %}</title>
+</head>
+<body>
+{% include "_boot.html" %}
+<div class="shell">
+  <aside class="side" aria-label="Main menu">
+    <a class="brand" href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='logo.jpg') }}" alt=""><span>{{ site_name }}</span></a>
+    <div class="nsec">Workspace</div>
+    <a class="nl {{ 'on' if nav == 'home' }}" href="{{ url_for('dashboard') }}">{{ ic('grid', 18) }}Dashboard</a>
+    <a class="nl {{ 'on' if nav == 'new' }}" href="{{ url_for('site_new') }}">{{ ic('plus', 18) }}New site</a>
+    {% if sname is defined %}
+    <div class="nsec">{{ sname }}</div>
+    <a class="nl {{ 'on' if active == 'overview' }}" href="{{ url_for('site_overview', name=sname) }}">{{ ic('globe', 18) }}Overview</a>
+    <a class="nl {{ 'on' if active == 'files' }}" href="{{ url_for('site_files', name=sname) }}">{{ ic('folder', 18) }}Files</a>
+    <a class="nl {{ 'on' if active == 'versions' }}" href="{{ url_for('site_versions', name=sname) }}">{{ ic('history', 18) }}Versions</a>
+    <a class="nl {{ 'on' if active == 'settings' }}" href="{{ url_for('site_settings', name=sname) }}">{{ ic('sliders', 18) }}Settings</a>
+    {% endif %}
+    <div class="grow"></div>
+    <div class="ubox"><span class="av">{{ (username or '?')[:1] }}</span><span class="un">{{ username }}<small>Signed in</small></span><a href="{{ url_for('logout') }}" aria-label="Logout" title="Logout">{{ ic('logout', 18) }}</a></div>
+  </aside>
+  <div class="content">
+    <header class="bar">
+      <a class="mb" href="{{ url_for('dashboard') }}"><img src="{{ url_for('static', filename='logo.jpg') }}" alt=""><span>{{ site_name }}</span></a>
+      <div class="crumbs">{% block crumbs %}<a href="{{ url_for('dashboard') }}">Workspace</a><span class="sl">/</span><b>Dashboard</b>{% endblock %}</div>
+      <div class="pills" aria-label="Server status">
+        <span class="pill"><i></i>Online</span>
+        <span class="pill">Sites <b>{{ site_count }}</b></span>
+        <span class="pill">Disk <b>{{ disk_pct }}%</b></span>
+      </div>
+    </header>
+    <main class="main">
+      {% with msgs = get_flashed_messages(with_categories=true) %}{% if msgs %}
+      <div class="flashes">{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ ic('check' if cat == 'ok' else 'alert', 18) }}<span>{{ m }}</span></div>{% endfor %}</div>
+      {% endif %}{% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Quick menu">
+  <a href="{{ url_for('dashboard') }}" class="{{ 'on' if nav == 'home' or sname is defined }}">{{ ic('grid', 21) }}Sites</a>
+  <a href="{{ url_for('site_new') }}" class="{{ 'on' if nav == 'new' }}">{{ ic('plus', 21) }}New</a>
+  <a href="{{ url_for('logout') }}">{{ ic('logout', 21) }}Logout</a>
+</nav>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "base_pub.html" %}
+{% block title %}{{ site_name }} · HTML &amp; ZIP website hosting{% endblock %}
+{% block content %}
+<section class="hero2">
+  <span class="livepill rv"><i></i>PANEL ONLINE · {{ total_sites }} SITE{{ '' if total_sites == 1 else 'S' }} LIVE</span>
+  <h1 class="rv" style="--i:1">Host your website.<br><span class="grad">Live in seconds.</span></h1>
+  <p class="rv" style="--i:2">Upload a single HTML file or a ZIP from your private panel and get a public link that works for everybody.</p>
+  <div class="cta rv" style="--i:3"><a class="btn pri lg" href="{{ url_for('login') }}">Open panel {{ ic('next', 18) }}</a><a class="btn lg" href="#features">See features</a></div>
+  <div class="logohero rv" style="--i:4"><img src="{{ url_for('static', filename='logo.jpg') }}" alt="{{ site_name }}" fetchpriority="high"></div>
+</section>
+
+<section id="features">
+  <div class="sect2"><span class="livepill">FEATURES</span><h2>Everything in one panel</h2></div>
+  <div class="ftab">
+    <div>{{ ic('bolt', 24) }}<h3>Instant live link</h3><p>Your site is public the moment the upload ends.</p></div>
+    <div>{{ ic('package', 24) }}<h3>HTML or ZIP</h3><p>One page, or a full website with CSS, JS and images.</p></div>
+    <div>{{ ic('history', 24) }}<h3>Version history</h3><p>Every update is saved — restore or download any version.</p></div>
+    <div>{{ ic('folder', 24) }}<h3>File manager</h3><p>See every file of a site and open it in one tap.</p></div>
+    <div>{{ ic('pencil', 24) }}<h3>Rename &amp; manage</h3><p>Change the name, replace the files or delete a site.</p></div>
+    <div>{{ ic('shield', 24) }}<h3>Safe &amp; private</h3><p>Only you can log in. Every hosted site is sandboxed.</p></div>
+  </div>
+
+  <div class="sect2"><span class="livepill">HOW IT WORKS</span><h2>Live in three steps</h2></div>
+  <div class="steps">
+    <div class="panel step rv"><span class="n">01</span><h3>Sign in</h3><p>Open the panel with your private login.</p></div>
+    <div class="panel step rv" style="--i:1"><span class="n">02</span><h3>Upload</h3><p>Name your site and drop an HTML file or a ZIP.</p></div>
+    <div class="panel step rv" style="--i:2"><span class="n">03</span><h3>Share the link</h3><p>Send the live link to anyone — no login needed to view.</p></div>
+  </div>
+</section>
+
+<section class="band"><h2>Ready to go live?</h2><p>Your next website is one upload away.</p><a class="btn pri lg" href="{{ url_for('login') }}">Open panel {{ ic('next', 18) }}</a></section>
+{% endblock %}

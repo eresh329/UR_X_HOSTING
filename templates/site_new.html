@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% set nav = 'new' %}
+{% block title %}New site · {{ site_name }}{% endblock %}
+{% block crumbs %}<a href="{{ url_for('dashboard') }}">Workspace</a><span class="sl">/</span><b>New site</b>{% endblock %}
+{% block content %}
+<div class="pagehead rv"><div><h1>New site</h1><p>Name it and upload an HTML file or a ZIP. It goes live the moment the upload ends.</p></div></div>
+<form class="panel narrow rv" style="--i:1" method="POST" enctype="multipart/form-data" autocomplete="off">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <div class="field"><label for="siteName">Site name</label>
+    <div class="inp">{{ ic('link', 18) }}<input id="siteName" name="siteName" value="{{ name_value }}" required maxlength="40" placeholder="my-website" autocapitalize="none" spellcheck="false"></div>
+    <div class="hint">Your link: <code id="urlPrev">/s/<b id="urlName">my-website</b>/</code></div></div>
+  <div class="field"><label for="siteFile">File</label>
+    <div><label class="drop">
+      <svg class="up" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 42V14M20 26l12-12 12 12"/><path d="M10 40v10a4 4 0 0 0 4 4h36a4 4 0 0 0 4-4V40"/></svg>
+      <div><b>Choose a file or drop it here</b><span>.html · .htm · .zip (a ZIP needs an index.html)</span></div>
+      <input id="siteFile" type="file" name="siteFile" accept=".html,.htm,.zip" required>
+    </label></div>
+    <div class="picked" id="picked"></div></div>
+  <button class="btn pri lg block" type="submit">{{ ic('rocket', 18) }}Deploy site</button>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+(function(){var i=document.getElementById('siteName'),n=document.getElementById('urlName');
+  function f(){var v=i.value.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');n.textContent=v||'my-website'}
+  i.addEventListener('input',f);f();})();
+</script>
+{% endblock %}

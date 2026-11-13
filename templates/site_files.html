@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+{% block pbody %}
+<div class="panel rv" style="--i:2">
+  <h2>{{ ic('upload', 17) }}Upload new version</h2><div class="sub">Replaces the live site. The current files are saved as a version first.</div>
+  <form method="POST" action="{{ url_for('site_update', name=sname) }}" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label class="drop">
+      <svg class="up" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 42V14M20 26l12-12 12 12"/><path d="M10 40v10a4 4 0 0 0 4 4h36a4 4 0 0 0 4-4V40"/></svg>
+      <div><b>Choose a file or drop it here</b><span>.html · .htm · .zip</span></div>
+      <input type="file" name="siteFile" accept=".html,.htm,.zip" required>
+    </label>
+    <div class="picked" id="picked"></div>
+    <button class="btn pri" type="submit">{{ ic('rocket', 16) }}Update site</button>
+  </form>
+</div>
+
+<div class="sechead" style="margin:26px 0 12px"><h2>Site files · {{ total }}</h2></div>
+<div class="flist rv" style="--i:3">
+  {% for f in files %}
+  <div class="frow">
+    {{ ic('file', 18) }}
+    <a class="nm" href="{{ hosted.url }}{{ f.path }}" target="_blank" rel="noopener">{{ f.path }}</a>
+    <span class="sz">{{ f.size_h }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% if total > files|length %}<p class="hint" style="margin-top:10px">Showing the first {{ files|length }} of {{ total }} files.</p>{% endif %}
+{% endblock %}

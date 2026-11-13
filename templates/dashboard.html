@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · {{ site_name }}{% endblock %}
+{% block content %}
+<div class="pagehead rv">
+  <div><h1>Your sites</h1><p>Everything you host, in one place. Open a site to manage its files, versions and settings.</p></div>
+  <a class="btn pri" href="{{ url_for('site_new') }}">{{ ic('plus', 16) }}New site</a>
+</div>
+
+<div class="split">
+  <div class="panel strip3 rv" style="--i:1">
+    <div class="cell"><div class="k">{{ ic('globe', 15) }}Sites</div><div class="v" data-count="{{ total }}">0</div></div>
+    <div class="cell"><div class="k">{{ ic('history', 15) }}Versions</div><div class="v" data-count="{{ versions }}">0</div></div>
+    <div class="cell"><div class="k">{{ ic('file', 15) }}Files</div><div class="v" data-count="{{ files }}">0</div></div>
+  </div>
+  <div class="panel rv" style="--i:2">
+    <h2 class="ph2">{{ ic('disk', 17) }}Server storage</h2><div class="sub">{{ free_h }} free on this server</div>
+    <div class="meter" data-v="{{ disk_pct }}"><div class="mh"><span>{{ ic('disk', 15) }}Disk used</span><b class="mv">{{ disk_pct }}%</b></div><div class="track"><i class="fill"></i></div></div>
+    <div class="meter" data-v="{{ [data_pct, 2]|max if total else 0 }}"><div class="mh"><span>{{ ic('folder', 15) }}Hosted sites</span><b class="mv">{{ total_size_h }}</b></div><div class="track"><i class="fill"></i></div></div>
+  </div>
+</div>
+
+{% if sites %}
+<div class="toolbar rv" style="--i:3">
+  <label class="search">{{ ic('search', 16) }}<input id="q" type="search" placeholder="Search sites…" autocomplete="off" spellcheck="false" aria-label="Search sites"></label>
+</div>
+<div class="rows rv" style="--i:4">
+  {% for s in sites %}
+  <article class="prow" data-name="{{ s.name }}">
+    <span class="sdot run"></span>
+    <div class="pn"><a href="{{ url_for('site_overview', name=s.name) }}">{{ s.name }}</a><small>{{ s.url }}</small></div>
+    <span class="tag">{{ ic('file', 13) }}{{ s.files }} files</span>
+    <span class="badge run"><i class="dot"></i>LIVE</span>
+    <div class="pa">
+      <button class="ib" type="button" data-copy="{{ s.url }}" aria-label="Copy link" title="Copy link">{{ ic('copy', 16) }}</button>
+      <a class="ib" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="Open site" title="Open site">{{ ic('external', 16) }}</a>
+      <a class="ib" href="{{ url_for('site_files', name=s.name) }}" aria-label="Files" title="Files">{{ ic('folder', 16) }}</a>
+      <a class="ib" href="{{ url_for('site_overview', name=s.name) }}" aria-label="Manage" title="Manage">{{ ic('next', 16) }}</a>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+<div class="empty" id="noMatch" hidden style="margin-top:12px"><h3>No match</h3><p>Nothing fits that search.</p></div>
+{% else %}
+<div class="empty rv" style="--i:3">
+  <svg class="float" viewBox="0 0 130 110" fill="none" stroke="#59f43a" stroke-width="1.6"><rect x="20" y="14" width="90" height="30" rx="7" stroke-opacity=".7"/><rect x="20" y="52" width="90" height="30" rx="7" stroke-opacity=".45" stroke-dasharray="4 5"/><circle cx="36" cy="29" r="3" fill="#b7ff3c" stroke="none"/><path d="M52 29h36" stroke-linecap="round"/></svg>
+  <h3>No sites yet</h3><p>Upload your first HTML file or ZIP and it goes live instantly.</p>
+  <a class="btn pri" href="{{ url_for('site_new') }}">{{ ic('plus', 17) }}Create site</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base_pub.html" %}
+{% block title %}Sign in · {{ site_name }}{% endblock %}
+{% block pnav %}<a class="lnk" href="/">{{ ic('home', 16) }} Home</a>{% endblock %}
+{% block content %}
+<div class="lgn"><div class="lcard rv">
+  <div class="lg">
+    <div class="ring"><svg viewBox="0 0 72 72" fill="none"><circle cx="36" cy="36" r="34" stroke="#59f43a" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="6 7"/></svg><img src="{{ url_for('static', filename='logo.jpg') }}" alt=""></div>
+    <h1>Sign in</h1><p>Enter your username and password.</p>
+  </div>
+  {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}" style="margin-bottom:16px">{{ ic('alert', 18) }}<span>{{ m }}</span></div>{% endfor %}{% endwith %}
+  <form method="POST" autocomplete="off">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <div class="field"><label for="username">Username</label>
+      <div class="inp">{{ ic('user', 18) }}<input id="username" name="username" placeholder="Username" required autofocus maxlength="40" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false"></div></div>
+    <div class="field"><label for="password">Password</label>
+      <div class="inp">{{ ic('lock', 18) }}<input id="password" type="password" name="password" placeholder="••••••••" required autocomplete="new-password" autocapitalize="none" autocorrect="off" spellcheck="false"></div></div>
+    <button class="btn pri lg block" type="submit">Sign in {{ ic('next', 18) }}</button>
+  </form>
+  <div class="sysline"><i></i>ENCRYPTED SESSION</div>
+</div></div>
+{% endblock %}
+{% block foot %}AUTHORIZED USER ONLY{% endblock %}

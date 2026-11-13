@@ -1,0 +1,13 @@
+{% extends "site_base.html" %}
+{% block pbody %}
+<div class="panel danger center narrow rv" style="--i:2;padding:44px 26px">
+  <div class="bigico">{{ ic('trash', 38) }}</div>
+  <h2 style="justify-content:center;font-size:22px">Delete {{ sname }}?</h2>
+  <p class="muted" style="margin-top:8px">The live link stops working and every file and version is removed. This cannot be undone.</p>
+  <form method="POST" action="{{ url_for('site_delete', name=sname) }}" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <button class="btn bad lg" type="submit">{{ ic('trash', 17) }}Yes, delete site</button>
+    <a class="btn lg" href="{{ url_for('site_settings', name=sname) }}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

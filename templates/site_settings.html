@@ -1,0 +1,15 @@
+{% extends "site_base.html" %}
+{% block pbody %}
+<div class="g2" style="align-items:start">
+  <form class="panel rv" style="--i:2" method="POST" action="{{ url_for('site_rename', name=sname) }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h2>{{ ic('pencil', 17) }}Rename site</h2><div class="sub">The link changes with the name.</div>
+    <div class="field"><label for="nn">Site name</label><div class="inp">{{ ic('link', 18) }}<input id="nn" name="newName" value="{{ sname }}" required maxlength="40" autocapitalize="none" spellcheck="false"></div></div>
+    <button class="btn pri" type="submit">{{ ic('check', 16) }}Save name</button>
+  </form>
+  <div class="panel danger rv" style="--i:3">
+    <h2 style="color:var(--bad)">{{ ic('alert', 18) }}Danger zone</h2><div class="sub">Deleting removes the site, its files and all saved versions for good.</div>
+    <a class="btn bad" href="{{ url_for('site_delete', name=sname) }}">{{ ic('trash', 17) }}Delete this site</a>
+  </div>
+</div>
+{% endblock %}

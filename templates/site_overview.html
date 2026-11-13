@@ -1,0 +1,35 @@
+{% extends "site_base.html" %}
+{% block pbody %}
+<div class="urlbar rv" style="--i:2">
+  <span class="u">{{ ic('link', 16) }}{{ origin }}{{ hosted.url }}</span>
+  <button class="btn sm" type="button" data-copy="{{ hosted.url }}">{{ ic('copy', 15) }}Copy link</button>
+  <a class="btn sm pri" href="{{ hosted.url }}" target="_blank" rel="noopener">{{ ic('external', 15) }}Open</a>
+</div>
+
+<div class="panel kpis rv" style="--i:3;margin-top:16px">
+  <div class="cell"><div class="k">{{ ic('file', 15) }}Files</div><div class="v">{{ hosted.files }}</div></div>
+  <div class="cell"><div class="k">{{ ic('disk', 15) }}Size</div><div class="v">{{ hosted.size_h }}</div></div>
+  <div class="cell"><div class="k">{{ ic('history', 15) }}Versions</div><div class="v">{{ hosted.versions|length }}</div></div>
+  <div class="cell"><div class="k">{{ ic('clock', 15) }}Updated</div><div class="v" style="font-size:15px;line-height:1.3">{{ hosted.updated or '—' }}</div></div>
+</div>
+
+<div class="rv" style="--i:4">
+  <div class="prbar"><i></i><i></i><i></i><span>{{ origin }}{{ hosted.url }}</span></div>
+  <div class="preview"><iframe src="{{ hosted.url }}" title="Live preview of {{ sname }}" loading="lazy" sandbox="allow-scripts allow-forms allow-popups"></iframe></div>
+</div>
+
+<div class="g2" style="margin-top:16px">
+  <div class="panel rv" style="--i:5">
+    <h2>{{ ic('upload', 17) }}Update this site</h2><div class="sub">Upload a new HTML file or ZIP. The old version is saved automatically.</div>
+    <a class="btn pri" href="{{ url_for('site_files', name=sname) }}">{{ ic('upload', 16) }}Upload new version</a>
+  </div>
+  <div class="panel rv" style="--i:6">
+    <h2>{{ ic('info', 17) }}Details</h2><div class="sub">About this site</div>
+    <div class="kv">
+      <div><span>Link</span><span>{{ hosted.url }}</span></div>
+      <div><span>Created</span><span>{{ hosted.created or '—' }}</span></div>
+      <div><span>Visibility</span><span>Public</span></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

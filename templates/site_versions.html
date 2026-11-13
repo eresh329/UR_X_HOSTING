@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+{% block pbody %}
+<div class="panel rv" style="--i:2">
+  <h2>{{ ic('history', 17) }}Version history</h2><div class="sub">Every update saves the previous files. Restore one to put it back live.</div>
+  {% if vers %}
+  <div class="flist free">
+    {% for v in vers %}
+    <div class="vrow frow">
+      <span class="vn">Version {{ v.n }}<small>{{ v.size_h }} · ZIP snapshot</small></span>
+      <span class="va">
+        <a class="btn sm" href="{{ url_for('site_version_download', name=sname, v=v.n) }}">{{ ic('download', 15) }}Download</a>
+        <form method="POST" action="{{ url_for('site_restore', name=sname, v=v.n) }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="btn sm pri" type="submit">{{ ic('restart', 15) }}Restore</button></form>
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty" style="padding:34px 16px"><h3>No versions yet</h3><p style="margin-bottom:0">Upload a new version of this site and the old one will show up here.</p></div>
+  {% endif %}
+</div>
+{% endblock %}
