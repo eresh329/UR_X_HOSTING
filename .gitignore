@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+sites/
+site_versions/
+sites.json
+.secret_key
+.env

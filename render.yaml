@@ -1,0 +1,20 @@
+# Render Blueprint — New + > Blueprint > pick this repo.
+# A persistent disk needs a paid instance (starter). For a FREE test remove the "disk:" block and
+# the DATA_DIR variable — it works, but uploaded sites are lost whenever Render restarts the app.
+services:
+  - type: web
+    name: ur-x-hosting
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 8 --timeout 120
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: urx-data
+      mountPath: /var/data
+      sizeGB: 1
